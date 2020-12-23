@@ -21,5 +21,8 @@
     <ClCompile Include="1516 게임 개발.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="115599 뿌요뿌.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
