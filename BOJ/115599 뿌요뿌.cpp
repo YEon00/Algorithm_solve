@@ -1,6 +1,5 @@
 #include <iostream>
 #include <queue>
-#include <memory.h>
 using namespace std;
 
 char map[13][7];
@@ -13,20 +12,23 @@ int dy[] = { 0,0,-1,1 };
 
 void Down_ppuyo() {
 	for (int i = 0; i < 6; i++) {
-		int nx = 11;
+		int nx = 12;
 		int em = 0;
-		while (nx > 0) {
+		int temp = 0;
+		bool flag = false;
+		while (nx--) {
 			if (map[nx][i] == '.') {
-				nx--;
+				if (!flag) {
+					temp = nx;
+					flag = true;
+				}
 				em++;
 			}
 			else {
-				if (nx == 11)
-					break;
-				else {
-					map[nx + em][i] = map[nx][i];
-					map[nx][i] = '.';
-					nx--;
+				if (temp != 0) {
+					map[temp][i] = map[temp - em][i];
+					map[temp - em][i] = '.';
+					temp--;
 				}
 			}
 		}
@@ -45,7 +47,7 @@ void POP_check(int x, int y) {
 		for (int i = 0; i < 4; i++) {
 			int nx = x + dx[i]; int ny = y + dy[i];
 			if (nx >= 0 && ny >= 0 && nx < 12 && ny < 6) {
-				if (map[x][y] == map[nx][ny] && visited[nx][ny] == 0) {
+				if (map[x][y] == map[nx][ny] && visited[nx][ny]==0) {
 					q.push({ nx,ny });
 					visited[nx][ny] = 1;
 					check++;
@@ -70,7 +72,7 @@ void POP_check(int x, int y) {
 int main() {
 	int result = 0;
 	for (int i = 0; i < 12; i++) {
-		for (int j = 0; j < 6; j++) {
+		for (int j = 0; j <6; j++) {
 			cin >> map[i][j];
 		}
 	}
@@ -78,7 +80,7 @@ int main() {
 		memset(visited, 0, sizeof(visited));
 		for (int i = 0; i < 12; i++) {
 			for (int j = 0; j < 6; j++) {
-				if (map[i][j] != '.' && visited[i][j] == 0)
+				if (map[i][j] != '.' && visited[i][j]==0)
 					POP_check(i, j);
 			}
 		}
@@ -91,11 +93,21 @@ int main() {
 				}
 			}
 		}
-
+		for (int i = 0; i < 12; i++) {
+			for (int j = 0; j < 6; j++) {
+				cout << map[i][j];
+			}
+			cout << '\n';
+		}
 		if (flag) {
 			result++;
 			Down_ppuyo();
-
+			for (int i = 0; i < 12; i++) {
+				for (int j = 0; j < 6; j++) {
+					cout << map[i][j];
+				}
+				cout << '\n';
+			}
 		}
 		else
 			break;
