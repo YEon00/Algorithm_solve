@@ -68,7 +68,6 @@ void POP_check(int x, int y) {
 
 }
 
-
 int main() {
 	int result = 0;
 	for (int i = 0; i < 12; i++) {
